@@ -18,8 +18,6 @@ module test_libome
 
 contains
   subroutine test_libome_interface
-    !use hoppet_libome_interfaces
-    !use convolution_pieces
     implicit none
     real(c_double) :: as4pi, LM, NF, x
     character(len=*), parameter :: red=char(27)//"[31m", reset=char(27)//"[0m"
@@ -32,22 +30,13 @@ contains
     NF    = 3.0_dp
     x     = 0.1_dp
 
-    block
-
-
-      ! request coefficients relative to min_power (0 -> first non-zero term)
-      do iorder = 2,3
-        !tmp_order = int(iorder, c_int)
-        !tmp_LM = LM
-        !tmp_NF = NF
-        !tmp_x = x
-        val1 = ome_AqqQNSEven_reg_coeff_as(iorder, LM, NF, x)
-        val2 = ome_AqqQNSEven_reg_coeff_as(iorder, LM, NF, x)
-        if (val1 /= val2) then
-          print *, red//"Mismatch for coeff a_s^", iorder, ": ", val1, "/=", val2,reset
-        end if
-      end do
-    end block
+    ! request coefficients relative to min_power (0 -> first non-zero term)
+    iorder = 2
+    val1 = ome_AqqQNSEven_reg_coeff_as(iorder, LM, NF, x)
+    val2 = ome_AqqQNSEven_reg_coeff_as(iorder, LM, NF, x)
+    if (val1 /= val2) then
+      print *, red//"mismatch between val1 and val2: ", val1, "/=", val2,reset
+    end if
 
   end subroutine test_libome_interface    
 end module test_libome
