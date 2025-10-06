@@ -8,6 +8,7 @@ I have a C++ [function](https://gitlab.com/hoppet-code/libome-fork/-/blob/2025-1
 ```c++
 double ome_AqqQNSEven_reg_coeff_as(int order_as, double LM, double NF, double x)
 ```
+with `extern "C"` binding. 
 
 In [run_libome.f90](run_libome.f90?plain=1#L35) I call the function twice
 ```f90
