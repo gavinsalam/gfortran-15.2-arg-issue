@@ -39,6 +39,10 @@ The arguments are passed by "value". The interface is defined at [run_libome.f90
   procedure(ome_orderas_LM_NF_x),     bind(C, name="ome_AqqQNSEven_reg_coeff_as"  ) :: ome_AqqQNSEven_reg_coeff_as
 ```
 
+Running through valgrind shows no errors, so it probably isn't the C++
+code that is causing trouble. The example runs fine with ifx 2025.2.1 on
+intel linux (with g++-11.4.0 for the C++) and flang 21.1.2 on mac (with
+apple clang 17.0.0 for the C++ part).
 
 ## Reproducing the bug
 To reproduce
