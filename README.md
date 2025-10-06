@@ -1,7 +1,8 @@
 # GFortran 15.2 C-binding argument-passing bug. 
 
-This repo provides an example of an argument-passing but with gfortran. See in gfortran 15.2.0 on aarch64, and also a range of other systems and older gfortran versions, including gfortran 15.1.0
-
+This repo provides an example of an argument-passing but with gfortran.
+Seen in gfortran 15.2.0 on linux aarch64, and also a range of other
+systems (intel and arm) and older gfortran versions.
 
 I have a C++ [function](https://gitlab.com/hoppet-code/libome-fork/-/blob/2025-10-gfortran-bug-report/src/ome/AqqQNSEven.cpp?ref_type=heads#L1335)
 
@@ -10,7 +11,7 @@ double ome_AqqQNSEven_reg_coeff_as(int order_as, double LM, double NF, double x)
 ```
 with `extern "C"` binding. 
 
-In [run_libome.f90](run_libome.f90?plain=1#L35) I call the function twice
+[run_libome.f90](run_libome.f90?plain=1#L35) calls the function twice
 ```f90
       val1 = ome_AqqQNSEven_reg_coeff_as(iorder, LM, NF, x)
       val2 = ome_AqqQNSEven_reg_coeff_as(iorder, LM, NF, x)
