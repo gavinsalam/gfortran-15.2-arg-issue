@@ -4,7 +4,9 @@ This repo provides an example of an argument-passing but with gfortran.
 Seen in gfortran 15.2.0 on linux aarch64, and also a range of other
 systems (intel and arm) and older gfortran versions.
 
-I have a C++ [function](libome-stub-cpp.cpp)
+This bug report has been prepared by Arnd Behring and Gavin Salam.
+
+It has a C++ [function](libome-stub-cpp.cpp)
 
 ```c++
 double ome_AqqQNSEven_reg_coeff_as(int order_as, double LM, double NF, double x)
@@ -27,7 +29,7 @@ The two return values should be identical, but instead come out different. The p
 ```
 with the last line showing the mismatch between `val1` and `val2`.
 Inspecting the arguments seen by C++ it looks like the the return value from the first call (15.1) is incorrectly being passed as the `LM` argument in the second call.
-In addition, the other arguments in the second call appear to contain contents of uninitialised memory (for me they change on every run of the executable).
+In addition, the other arguments in the second call appear to contain contents of uninitialised memory (on some systems they change on every run of the executable).
 
 The arguments are passed by "value". The interface is defined at [run_libome.f90 line 9](run_libome.f90?plain=1#L9), which should match the C interface given above.
 ```f90
@@ -42,7 +44,7 @@ The arguments are passed by "value". The interface is defined at [run_libome.f90
   procedure(ome_orderas_LM_NF_x),     bind(C, name="ome_AqqQNSEven_reg_coeff_as"  ) :: ome_AqqQNSEven_reg_coeff_as
 ```
 
-Running through valgrind shows no errors, so it probably isn't the C++
+Running through valgrind shows no errors, and it probably isn't the C++
 code that is causing trouble. The example runs fine with ifx 2025.2.1 on
 intel linux (with g++-11.4.0 for the C++) and flang 21.1.2 on mac (with
 apple clang 17.0.0 for the C++ part).
