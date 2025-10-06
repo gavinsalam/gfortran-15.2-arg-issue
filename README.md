@@ -50,15 +50,12 @@ To reproduce
 git clone --recursive https://github.com/gavinsalam/gfortran-15.2-arg-issue.git
 ```
 
-Build and run this on mac with
-
+Build and run this on mac (using apple clang for C++) with
 ```
 gfortran -c run_libome.f90 && c++ -std=c++17 -c libome-fork/src/ome/AqqQNSEven.cpp -I libome-fork/src/ && gfortran run_libome.o AqqQNSEven.o -o reproduce -lc++ && ./reproduce
 ```
 
-Build and run this on linux 
-
-
+Build and run this on linux (using gcc for C++)
 ```
 gfortran -c run_libome.f90 && g++ -std=c++17 -c libome-fork/src/ome/AqqQNSEven.cpp -I libome-fork/src/ && gfortran run_libome.o AqqQNSEven.o -o reproduce -lstdc++ && ./reproduce
 ```
