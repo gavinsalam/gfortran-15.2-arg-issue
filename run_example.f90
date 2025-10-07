@@ -1,4 +1,4 @@
-module test_libome
+module test_example
   use, intrinsic :: iso_c_binding
   implicit none
 
@@ -17,7 +17,7 @@ module test_libome
   procedure(simple_interface),     bind(C, name="simple_function"  ) :: simple_function    
 
 contains
-  subroutine test_libome_interface
+  subroutine test_example_interface
     implicit none
     real(c_double) :: arg2, arg3, arg4
     character(len=*), parameter :: red=char(27)//"[31m", reset=char(27)//"[0m"
@@ -37,13 +37,13 @@ contains
       print *, red//"mismatch between val1 and val2: ", val1, "/=", val2,reset
     end if
 
-  end subroutine test_libome_interface    
-end module test_libome
+  end subroutine test_example_interface    
+end module test_example
 
 program tester
-  use test_libome
+  use test_example
   implicit none
 
-  call test_libome_interface()
+  call test_example_interface()
 
 end program tester
