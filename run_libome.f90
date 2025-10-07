@@ -6,7 +6,7 @@ module test_libome
   integer, parameter  :: dp = kind(1.0d0)
 
   abstract interface
-    function ome_orderas_LM_NF_x(order_as, LM, NF, x) bind(C) result(res)
+    function simple_interface(order_as, LM, NF, x) bind(C) result(res)
       import c_double, c_int
       integer(c_int), value, intent(in) :: order_as
       real(c_double), value, intent(in) :: LM, NF, x
@@ -14,7 +14,7 @@ module test_libome
     end function
   end interface 
 
-  procedure(ome_orderas_LM_NF_x),     bind(C, name="ome_AqqQNSEven_reg_coeff_as"  ) :: ome_AqqQNSEven_reg_coeff_as
+  procedure(simple_interface),     bind(C, name="simple_function"  ) :: simple_function
 
 contains
   subroutine test_libome_interface
@@ -32,8 +32,8 @@ contains
 
     ! request coefficients relative to min_power (0 -> first non-zero term)
     iorder = 2
-    val1 = ome_AqqQNSEven_reg_coeff_as(iorder, LM, NF, x)
-    val2 = ome_AqqQNSEven_reg_coeff_as(iorder, LM, NF, x)
+    val1 = simple_function(iorder, LM, NF, x)
+    val2 = simple_function(iorder, LM, NF, x)
     if (val1 /= val2) then
       print *, red//"mismatch between val1 and val2: ", val1, "/=", val2,reset
     end if

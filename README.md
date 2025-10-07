@@ -9,22 +9,22 @@ This bug report has been prepared by Arnd Behring and Gavin Salam.
 It has a C++ [function](libome-stub-cpp.cpp)
 
 ```c++
-double ome_AqqQNSEven_reg_coeff_as(int order_as, double LM, double NF, double x)
+double simple_function(int order_as, double LM, double NF, double x)
 ```
 with `extern "C"` binding. 
 
 [run_libome.f90](run_libome.f90?plain=1#L35) calls the function twice
 ```f90
-      val1 = ome_AqqQNSEven_reg_coeff_as(iorder, LM, NF, x)
-      val2 = ome_AqqQNSEven_reg_coeff_as(iorder, LM, NF, x)
+      val1 = simple_function(iorder, LM, NF, x)
+      val2 = simple_function(iorder, LM, NF, x)
 ```
 The two return values should be identical, but instead come out different. The printout is
 
 ```
-[debug] ome_AqqQNSEven_reg_coeff_as called: order_as=2 LM=10 NF=3 x=0.1
-[debug] ome_AqqQNSEven_reg_coeff_as returning: 15.1
-[debug] ome_AqqQNSEven_reg_coeff_as called: order_as=1731463972 LM=15.1 NF=6.92383e-310 x=2.12196e-314
-[debug] ome_AqqQNSEven_reg_coeff_as returning: 1.73146e+09
+[debug] simple_function called: order_as=2 LM=10 NF=3 x=0.1
+[debug] simple_function returning: 15.1
+[debug] simple_function called: order_as=1731463972 LM=15.1 NF=6.92383e-310 x=2.12196e-314
+[debug] simple_function returning: 1.73146e+09
  mismatch between val1 and val2:    15.100000000000000      /=   1731463987.0999999      
 ```
 with the last line showing the mismatch between `val1` and `val2`.
@@ -34,14 +34,14 @@ In addition, the other arguments in the second call appear to contain contents o
 The arguments are passed by "value". The interface is defined at [run_libome.f90 line 9](run_libome.f90?plain=1#L9), which should match the C interface given above.
 ```f90
   abstract interface
-    function ome_orderas_LM_NF_x(order_as, LM, NF, x) bind(C) result(res)
+    function simple_interface(order_as, LM, NF, x) bind(C) result(res)
       import c_double, c_int
       integer(c_int), value, intent(in) :: order_as
       real(c_double), value, intent(in) :: LM, NF, x
       real(c_double) :: res
     end function
   end interface 
-  procedure(ome_orderas_LM_NF_x),     bind(C, name="ome_AqqQNSEven_reg_coeff_as"  ) :: ome_AqqQNSEven_reg_coeff_as
+  procedure(simple_interface),     bind(C, name="simple_function"  ) :: simple_function
 ```
 
 Running through valgrind shows no errors, and it probably isn't the C++
