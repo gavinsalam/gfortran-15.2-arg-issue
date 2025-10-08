@@ -71,3 +71,7 @@ The same behaviour also occurs if I swap out the C++ code for plain C code, see 
 ```
 gfortran -c run_example.f90 && gcc -c example-stub-c.c && gfortran run_example.o example-stub-c.o -o reproduce-c && ./reproduce-c
 ```
+
+## GCC bug report
+
+See https://gcc.gnu.org/bugzilla/show_bug.cgi?id=122206
