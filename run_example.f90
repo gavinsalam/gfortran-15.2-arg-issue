@@ -25,12 +25,12 @@ contains
     real(c_double) :: val1, val2
 
     ! Example values for testing
-    arg2    = 10._dp
-    arg3    = 3.0_dp
-    arg4     = 0.1_dp
-
-    ! request coefficients relative to min_power (0 -> first non-zero term)
     iarg1 = 2
+    arg2  = 10._dp
+    arg3  = 3.0_dp
+    arg4  = 0.1_dp
+
+    ! call the routine twice
     val1 = simple_function(iarg1, arg2, arg3, arg4)
     val2 = simple_function(iarg1, arg2, arg3, arg4)
     if (val1 /= val2) then
